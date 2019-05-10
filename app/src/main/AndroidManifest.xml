@@ -35,11 +35,7 @@
         <activity android:name=".ui.mainPage.MainPageActivity"/>
         <activity android:name=".ui.manager.ManageStudent"/>
         <activity android:name=".ui.manager.QueryCheckInf"/>
-        <activity android:name=".ui.manager.QuerySuggest"/>
-        <activity android:name=".ui.manager.ReleaseNotice"/>
-        <activity android:name=".ui.student.ReleaseSuggest"/>
-        <activity android:name=".ui.student.QueryNotice"/>
-        <activity android:name=".ui.student.Memorandum"/>
+        <activity android:name=".ui.common.LookActivity"/>
         <activity android:name=".ui.student.CheckIn"/>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

@@ -3,13 +3,18 @@ package com.example.lxy.lbsproject.ui.login;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lxy.lbsproject.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class LogInActivity extends Activity implements LogInContract.View, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -22,6 +27,7 @@ public class LogInActivity extends Activity implements LogInContract.View, View.
     private RadioGroup rg_login_user;
 
     private int userType = 0;
+    private boolean mIsExit;
 
 
     @Override
@@ -80,5 +86,29 @@ public class LogInActivity extends Activity implements LogInContract.View, View.
         } else {
             userType = 0;
         }
+    }
+    @Override
+    /**
+     * 双击返回键退出
+     */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                this.finish();
+            } else {
+                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                mIsExit = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            }
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }
