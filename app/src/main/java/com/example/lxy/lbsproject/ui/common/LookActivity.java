@@ -24,11 +24,11 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 public class LookActivity extends Activity implements View.OnClickListener {
-    public static final int MEMO=1;  //备忘录标识
-    public static final int NOTICE=2;  //公告
-    public static final int NOTICEMAN=3; //公告管理
-    public static final int SUGGESTMAN=4;   //意见反馈
-    public static final int SUGGEST=5;  //意见建议
+    private static final int MEMO=1;  //备忘录标识
+    private static final int NOTICE=2;  //公告
+    private static final int NOTICEMAN=3; //公告管理
+    private static final int SUGGESTMAN=4;   //意见反馈
+    private static final int SUGGEST=5;  //意见建议
 
     private RecyclerView recyclerView;
     private Button btn_back;
@@ -51,6 +51,12 @@ public class LookActivity extends Activity implements View.OnClickListener {
         setdata();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setdata();
+    }
+
     private void init() {
         recyclerView = findViewById(R.id.rv_main);
         btn_back = findViewById(R.id.btn_back);
@@ -64,7 +70,7 @@ public class LookActivity extends Activity implements View.OnClickListener {
     }
 
     private void setdata() {
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
         funType = intent.getIntExtra("funType",0);
         lookAdapter=new LookAdapter();
@@ -75,11 +81,20 @@ public class LookActivity extends Activity implements View.OnClickListener {
                 query1.addWhereEqualTo("user",userName);
                 query1.findObjects(new FindListener<Memo>() {
                     @Override
-                    public void done(List<Memo> list, BmobException e) {
+                    public void done(final List<Memo> list, BmobException e) {
                         if (e==null){
                             lookAdapter.setMemo(list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setAdapter(lookAdapter);
+                            lookAdapter.setOnItemClickListener(new LookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onClick(View v, int position) {
+                                    Intent intent1=new Intent(context,DetailActivity.class);
+                                    intent1.putExtra("obId",list.get(position).getObjectId());
+                                    intent1.putExtra("funType",MEMO);
+                                    context.startActivity(intent1);
+                                }
+                            });
                         }else {
                             Toast.makeText(context,"查询失败！" + e, Toast.LENGTH_SHORT).show();
                         }
@@ -93,12 +108,21 @@ public class LookActivity extends Activity implements View.OnClickListener {
                 query2.addWhereEqualTo("user","2");
                 query2.findObjects(new FindListener<Notice>() {
                     @Override
-                    public void done(List<Notice> list, BmobException e) {
+                    public void done(final List<Notice> list, BmobException e) {
                         if (e==null){
                             lookAdapter.setNotice(list);
                             Log.e("a11", "onBindViewHolder: "+list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setAdapter(lookAdapter);
+                            lookAdapter.setOnItemClickListener(new LookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onClick(View v, int position) {
+                                    Intent intent1=new Intent(context,DetailActivity.class);
+                                    intent1.putExtra("obId",list.get(position).getObjectId());
+                                    intent1.putExtra("funType",NOTICE);
+                                    context.startActivity(intent1);
+                                }
+                            });
                         }else {
                             Toast.makeText(context,"查询失败！" + e, Toast.LENGTH_SHORT).show();
                         }
@@ -111,12 +135,21 @@ public class LookActivity extends Activity implements View.OnClickListener {
                 query3.addWhereEqualTo("user","2");
                 query3.findObjects(new FindListener<Notice>() {
                     @Override
-                    public void done(List<Notice> list, BmobException e) {
+                    public void done(final List<Notice> list, BmobException e) {
                         if (e==null){
                             lookAdapter.setNotice(list);
                             Log.e("a11", "onBindViewHolder: "+list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setAdapter(lookAdapter);
+                            lookAdapter.setOnItemClickListener(new LookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onClick(View v, int position) {
+                                    Intent intent1=new Intent(context,DetailActivity.class);
+                                    intent1.putExtra("obId",list.get(position).getObjectId());
+                                    intent1.putExtra("funType",NOTICEMAN);
+                                    context.startActivity(intent1);
+                                }
+                            });
                         }else {
                             Toast.makeText(context,"查询失败！" + e, Toast.LENGTH_SHORT).show();
                         }
@@ -130,12 +163,21 @@ public class LookActivity extends Activity implements View.OnClickListener {
                 query4.addWhereNotEqualTo("user","0");
                 query4.findObjects(new FindListener<Suggest>() {
                     @Override
-                    public void done(List<Suggest> list, BmobException e) {
+                    public void done(final List<Suggest> list, BmobException e) {
                         if (e==null){
                             lookAdapter.setSuggest(list);
                             Log.e("a11", "onBindViewHolder: "+list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setAdapter(lookAdapter);
+                            lookAdapter.setOnItemClickListener(new LookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onClick(View v, int position) {
+                                    Intent intent1=new Intent(context,DetailActivity.class);
+                                    intent1.putExtra("obId",list.get(position).getObjectId());
+                                    intent1.putExtra("funType",SUGGESTMAN);
+                                    context.startActivity(intent1);
+                                }
+                            });
                         }else {
                             Toast.makeText(context,"查询失败！" + e, Toast.LENGTH_SHORT).show();
                         }

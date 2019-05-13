@@ -11,11 +11,11 @@ import com.example.lxy.lbsproject.ui.student.MyInfActivity;
 
 public class MainPagePresenter implements MainPageContract.Presenter {
 
-    public static final int MEMO=1;  //备忘录标识
-    public static final int NOTICE=2;  //公告
-    public static final int NOTICEMAN=3; //公告管理
-    public static final int SUGGESTMAN=4;   //意见反馈
-    public static final int SUGGEST=5;  //意见建议
+    private static final int MEMO=1;  //备忘录标识
+    private static final int NOTICE=2;  //公告
+    private static final int NOTICEMAN=3; //公告管理
+    private static final int SUGGESTMAN=4;   //意见反馈
+    private static final int SUGGEST=5;  //意见建议
 
     private MainPageContract.View view;
 

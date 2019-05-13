@@ -21,6 +21,8 @@ public class LookAdapter extends RecyclerView.Adapter<LookAdapter.Memoviewholder
     private List<Notice> noticeList;
     private List<Suggest> suggestList;
 
+    private OnItemClickListener listener;
+
     private int type;
 
     public void setMemo(List<Memo> list) {
@@ -47,7 +49,7 @@ public class LookAdapter extends RecyclerView.Adapter<LookAdapter.Memoviewholder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LookAdapter.Memoviewholder checkInviewholder, int i) {
+    public void onBindViewHolder(@NonNull LookAdapter.Memoviewholder checkInviewholder, final int i) {
         switch (type) {
             case 1:
                 checkInviewholder.tv_content.setText(memoList.get(i).getTitle());
@@ -70,7 +72,7 @@ public class LookAdapter extends RecyclerView.Adapter<LookAdapter.Memoviewholder
         checkInviewholder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.onClick(v, i);
             }
         });
     }
@@ -100,5 +102,12 @@ public class LookAdapter extends RecyclerView.Adapter<LookAdapter.Memoviewholder
             tv_time = itemView.findViewById(R.id.tv_time);
             tv_day = itemView.findViewById(R.id.tv_day);
         }
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener=listener;
+    }
+
+    public interface OnItemClickListener{
+        void onClick(View v, int position);
     }
 }
