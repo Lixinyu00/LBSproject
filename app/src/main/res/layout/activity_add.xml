@@ -79,16 +79,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:text="标题:"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_bg"
+                android:gravity="start" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="内容:"
                 android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/et_add"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/edit_bg"
+                android:layout_height="308dp"
                 android:layout_marginTop="10dp"
-                android:gravity="start"/>
+                android:background="@drawable/edit_bg"
+                android:gravity="start" />
 
         </LinearLayout>
 
@@ -109,7 +124,7 @@
             android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/btn_detail_save"
+            android:id="@+id/btn_add_save"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"

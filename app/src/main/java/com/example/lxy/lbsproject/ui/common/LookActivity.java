@@ -72,6 +72,7 @@ public class LookActivity extends Activity implements View.OnClickListener {
     private void setdata() {
         final Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
+        Log.e("2", "setdata: "+userName );
         funType = intent.getIntExtra("funType",0);
         lookAdapter=new LookAdapter();
         switch (funType){

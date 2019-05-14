@@ -1,6 +1,7 @@
 package com.example.lxy.lbsproject.ui.mainPage;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.lxy.lbsproject.ui.manager.ManageStudent;
 import com.example.lxy.lbsproject.ui.manager.QueryCheckInf;
@@ -30,7 +31,8 @@ public class MainPagePresenter implements MainPageContract.Presenter {
 
     private void checkUserType() {
         Intent intent = view.getMyIntent();
-        userName = intent.getStringExtra("username");
+        userName = intent.getStringExtra("userName");
+        Log.e("1", "checkUserType: "+userName );
         userType = intent.getIntExtra("userType", 0);
         if (userType == 0) {
             view.setText("考勤", "备忘录","公告","我的");
@@ -45,12 +47,12 @@ public class MainPagePresenter implements MainPageContract.Presenter {
         if (userType == 0) {
             Intent intent=new Intent(view.getContext(), CheckIn.class);
             intent.putExtra("userType",userType);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         } else if (userType == 1) {
             Intent intent=new Intent(view.getContext(), ManageStudent.class);
             intent.putExtra("userType",userType);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         }
     }
@@ -58,7 +60,7 @@ public class MainPagePresenter implements MainPageContract.Presenter {
     @Override
     public void fun2() {
             Intent intent=new Intent(view.getContext(), LookActivity.class);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
         if (userType == 0) {
             intent.putExtra("funType",MEMO);
         } else if (userType == 1) {
@@ -71,13 +73,13 @@ public class MainPagePresenter implements MainPageContract.Presenter {
     public void fun3() {
         if (userType == 0) {
             Intent intent=new Intent(view.getContext(), LookActivity.class);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             intent.putExtra("funType",NOTICE);
             view.getContext().startActivity(intent);
         } else if (userType == 1) {
             Intent intent=new Intent(view.getContext(), QueryCheckInf.class);
             intent.putExtra("userType",userType);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         }
     }
@@ -87,11 +89,11 @@ public class MainPagePresenter implements MainPageContract.Presenter {
         if (userType == 0) {
             Intent intent=new Intent(view.getContext(), MyInfActivity.class);
             intent.putExtra("userType",userType);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         } else if (userType == 1) {
             Intent intent=new Intent(view.getContext(), LookActivity.class);
-            intent.putExtra("username",userName);
+            intent.putExtra("userName",userName);
             intent.putExtra("funType",SUGGESTMAN);
             view.getContext().startActivity(intent);
         }

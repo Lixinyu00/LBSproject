@@ -38,7 +38,7 @@ public class LogInPresenter implements LogInContract.Presenter {
                 public void done(MyUser myUser, BmobException e) {
                     if (e == null) {
                         Intent intent = new Intent(view.getContext(), MainPageActivity.class);
-                        intent.putExtra("username", myUser.getUsername());
+                        intent.putExtra("userName", myUser.getUsername());
                         if (type == 1 && myUser.getUserType() != 1) {
                             Toast.makeText(view.getContext(), "您还不是管理员！", Toast.LENGTH_SHORT).show();
                         } else {
