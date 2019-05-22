@@ -95,7 +95,7 @@ public class LogInActivity extends Activity implements LogInContract.View, View.
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mIsExit) {
-                this.finish();
+                System.exit(0);
             } else {
                 Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
                 mIsExit = true;

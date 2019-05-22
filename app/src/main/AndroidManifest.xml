@@ -36,10 +36,15 @@
         <activity android:name=".ui.manager.ManageStudent"/>
         <activity android:name=".ui.manager.QueryCheckInf"/>
         <activity android:name=".ui.common.LookActivity"/>
-        <activity android:name=".ui.student.CheckIn"/>
+        <activity android:name=".ui.student.CheckInActivity"/>
         <activity android:name=".ui.common.DetailActivity"/>
         <activity android:name=".ui.common.AddActivity"/>
         <activity android:name=".ui.common.ModifyActivity"/>
+        <activity android:name=".ui.student.MyActivity"/>
+        <activity android:name=".ui.common.MateViewActivity"/>
+        <activity android:name=".ui.common.MyInfActivity"/>
+        <activity android:name=".ui.common.ModifyInfActivity"/>
+        <activity android:name=".ui.manager.CheckInfActivity"/>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.example.lxy.lbsproject.BmobContentProvider">

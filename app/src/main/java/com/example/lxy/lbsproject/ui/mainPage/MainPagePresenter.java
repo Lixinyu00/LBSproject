@@ -5,9 +5,9 @@ import android.util.Log;
 
 import com.example.lxy.lbsproject.ui.manager.ManageStudent;
 import com.example.lxy.lbsproject.ui.manager.QueryCheckInf;
-import com.example.lxy.lbsproject.ui.student.CheckIn;
+import com.example.lxy.lbsproject.ui.student.CheckInActivity;
 import com.example.lxy.lbsproject.ui.common.LookActivity;
-import com.example.lxy.lbsproject.ui.student.MyInfActivity;
+import com.example.lxy.lbsproject.ui.student.MyActivity;
 
 
 public class MainPagePresenter implements MainPageContract.Presenter {
@@ -45,14 +45,11 @@ public class MainPagePresenter implements MainPageContract.Presenter {
     @Override
     public void fun1() {
         if (userType == 0) {
-            Intent intent=new Intent(view.getContext(), CheckIn.class);
-            intent.putExtra("userType",userType);
+            Intent intent=new Intent(view.getContext(), CheckInActivity.class);
             intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         } else if (userType == 1) {
             Intent intent=new Intent(view.getContext(), ManageStudent.class);
-            intent.putExtra("userType",userType);
-            intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         }
     }
@@ -78,7 +75,6 @@ public class MainPagePresenter implements MainPageContract.Presenter {
             view.getContext().startActivity(intent);
         } else if (userType == 1) {
             Intent intent=new Intent(view.getContext(), QueryCheckInf.class);
-            intent.putExtra("userType",userType);
             intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         }
@@ -87,8 +83,7 @@ public class MainPagePresenter implements MainPageContract.Presenter {
     @Override
     public void fun4() {
         if (userType == 0) {
-            Intent intent=new Intent(view.getContext(), MyInfActivity.class);
-            intent.putExtra("userType",userType);
+            Intent intent=new Intent(view.getContext(), MyActivity.class);
             intent.putExtra("userName",userName);
             view.getContext().startActivity(intent);
         } else if (userType == 1) {

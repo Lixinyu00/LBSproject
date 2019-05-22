@@ -96,7 +96,8 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        tv_day.setText(year + "/" + month + "/" + dayOfMonth);
+                        int mon=month+1;
+                        tv_day.setText(year + "/" + mon + "/" + dayOfMonth);
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
@@ -151,7 +152,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 Notice notice=new Notice();
                 notice.setTitle(et_title.getText().toString());
                 notice.setContent(et_add.getText().toString());
-                notice.setUser(userName);
+                notice.setUser("2");
                 notice.save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {

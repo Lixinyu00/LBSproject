@@ -11,7 +11,7 @@
         android:background="@color/white">
 
         <Button
-            android:id="@+id/btn_myinf_back"
+            android:id="@+id/btn_modinf_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
-            android:text="详细信息"
+            android:text="修改信息"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -40,36 +40,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="50dp"
-            android:text="头像"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <com.example.lxy.lbsproject.utils.ImageViewPlus
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="250dp"
-            android:src="@mipmap/touxiang" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -86,9 +58,9 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_myInf_name"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/tv_modinf_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="200dp"
@@ -96,17 +68,11 @@
             android:textSize="15sp" />
 
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
         android:background="@color/white">
 
         <ImageView
@@ -123,9 +89,9 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_myInf_college"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/tv_modinf_college"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="200dp"
@@ -154,9 +120,9 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_myInf_major"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/tv_modinf_major"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="200dp"
@@ -185,9 +151,9 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_myInf_classes"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/tv_modinf_classes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="200dp"
@@ -216,9 +182,9 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_myInf_phone"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_modinf_phone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="200dp"
@@ -232,44 +198,14 @@
             android:background="@color/gray" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <Button
-            android:id="@+id/btn_myinf_mod"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@color/royalblue"
-            android:text="修改"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btn_myinf_del"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/royalblue"
-            android:text="删除"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btn_myinf_checkinf"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@color/royalblue"
-            android:text="考勤记录"
-            android:textColor="@color/white" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_modinf_save"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/royalblue"
+        android:text="保存"
+        android:textColor="@color/white" />
 
 </LinearLayout>
