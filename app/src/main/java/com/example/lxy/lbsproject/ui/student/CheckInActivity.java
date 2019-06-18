@@ -105,7 +105,7 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
             results = wifiManager.getScanResults();
             j = -1;
             for (int i = 0; i < results.size(); i++) {
-                if (results.get(i).BSSID.equals("fc:d7:33:1b:28:a0") || results.get(i).BSSID.equals("01:80:c2:00:00:03")) {
+                if (results.get(i).BSSID.equals("a4:50:46:ee:f6:e5") || results.get(i).BSSID.equals("34:96:72:5c:23:4d")) {
                     j = i;
                 }
             }
