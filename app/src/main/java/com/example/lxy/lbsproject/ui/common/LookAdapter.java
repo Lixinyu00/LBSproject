@@ -60,13 +60,11 @@ public class LookAdapter extends RecyclerView.Adapter<LookAdapter.Memoviewholder
                 checkInviewholder.tv_content.setText(noticeList.get(i).getTitle());
                 checkInviewholder.tv_time.setText(noticeList.get(i).getUpdatedAt().substring(0,10));
                 checkInviewholder.tv_day.setText(noticeList.get(i).getUpdatedAt().substring(11,19));
-                Log.e("a11", "onBindViewHolder: "+noticeList);
                 break;
             case 3:
                 checkInviewholder.tv_content.setText(suggestList.get(i).getTitle());
                 checkInviewholder.tv_time.setText(suggestList.get(i).getUpdatedAt().substring(0,10));
                 checkInviewholder.tv_day.setText(suggestList.get(i).getUpdatedAt().substring(11,19));
-                Log.e("a11", "onBindViewHolder: "+suggestList);
                 break;
         }
         checkInviewholder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/blanchedalmond"
+    android:layout_height="match_parent"
+    android:background="@color/blanchedalmond"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -72,7 +72,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -100,12 +100,56 @@
             <EditText
                 android:id="@+id/et_add"
                 android:layout_width="match_parent"
-                android:layout_height="308dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_bg"
                 android:gravity="start" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RadioGroup
+                android:id="@+id/rg_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="全体" />
+
+                <RadioButton
+                    android:id="@+id/rb_college"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学院" />
+
+                <RadioButton
+                    android:id="@+id/rb_cla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="班级" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/et_select"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_bg"
+                android:gravity="start" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

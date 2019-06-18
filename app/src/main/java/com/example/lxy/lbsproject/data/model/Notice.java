@@ -4,16 +4,16 @@ import cn.bmob.v3.BmobObject;
 
 public class Notice extends BmobObject {
 
-    private String user;
+    private String type;
     private String title;
     private String content;
 
-    public String getUser() {
-        return user;
+    public String getType() {
+        return type;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {

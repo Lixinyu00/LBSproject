@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,11 +29,12 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class CheckInActivity extends Activity implements View.OnClickListener {
 
-    private RecyclerView recyclerView;
     private Button btn_back;
     private Button btn_check;
     private TextView tv_name;
     private TextView tv_classes;
+    private TextView tv_in;
+    private TextView tv_out;
 
     private String userName;
 
@@ -46,10 +45,11 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
     private int type = 0;
     private String obID;
     private List<ScanResult> results;
-    private String bssid="";
+    private String bssid = "";
 
-    private CheckInAdapter checkInAdapter;
     private WifiManager wifiManager;
+    private boolean isIn;
+    private int j;
 
 
     @Override
@@ -60,14 +60,16 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
         init();
         setlistener();
         setdata();
+        handler.postDelayed(runnable, 1000);
     }
 
     private void init() {
-        recyclerView = findViewById(R.id.rv_check);
         btn_back = findViewById(R.id.btn_check_back);
         btn_check = findViewById(R.id.btn_check);
         tv_name = findViewById(R.id.tv_check_name);
         tv_classes = findViewById(R.id.tv_check_classes);
+        tv_in = findViewById(R.id.tv_checkin_in);
+        tv_out = findViewById(R.id.tv_checkin_out);
     }
 
     private void setlistener() {
@@ -92,22 +94,36 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
                 }
             }
         });
-        wifiManager= (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.startScan();
-        results = wifiManager.getScanResults();
-        Log.e("11111", "setdata: "+results.size() );
-        checkInAdapter = new CheckInAdapter();
-        checkInAdapter.setData(results);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(checkInAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        checkInAdapter.setOnItemClickListener(new CheckInAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                bssid = results.get(position).BSSID;
-            }
-        });
     }
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifiManager.startScan();
+            results = wifiManager.getScanResults();
+            j = -1;
+            for (int i = 0; i < results.size(); i++) {
+                if (results.get(i).BSSID.equals("fc:d7:33:1b:28:a0") || results.get(i).BSSID.equals("01:80:c2:00:00:03")) {
+                    j = i;
+                }
+            }
+            if (j != -1) {
+                int wifi_level = WifiManager.calculateSignalLevel(results.get(j).level, 5);
+                if (wifi_level >= 3) {
+                    isIn = true;
+                    bssid=results.get(j).BSSID;
+                } else {
+                    isIn = false;
+                }
+            } else {
+                isIn = false;
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
+
 
     @Override
     public void onClick(View v) {
@@ -120,12 +136,15 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
                 Date date = new Date(System.currentTimeMillis());
                 times = formatter.format(date);
                 if (type == 0) {
-                    if (bssid.equals("a4:50:46:ee:f6:e5")||bssid.equals("34:96:72:5c:23:4d")){
+                    if (isIn) {
                         type = 1;
                         btn_check.setText("签退");
+                        tv_in.setText("上课打卡时间  " + times.substring(11, 16));
+                        tv_out.setText("下课打卡时间");
                         CheckIn checkIn = new CheckIn();
                         checkIn.setDay(times.substring(0, 10));
                         checkIn.setClasses(myUser.getClasses());
+                        checkIn.setName(myUser.getName());
                         checkIn.setUser(userName);
                         checkIn.setTimeIn(times.substring(11, 16));
                         checkIn.setMac(bssid);
@@ -140,14 +159,15 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
                                 }
                             }
                         });
-                    }else {
-                        Toast.makeText(context, "请选择正确的wifi！" , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "不在签到范围！", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    if (bssid.equals("a4:50:46:ee:f6:e5")||bssid.equals("34:96:72:5c:23:4d")){
+                    if (isIn) {
                         type = 0;
                         btn_check.setText("签到");
+                        tv_out.setText("下课打卡时间  " + times.substring(11, 16));
                         CheckIn checkIn = new CheckIn();
                         checkIn.setTimeOut(times.substring(11, 16));
                         checkIn.update(obID, new UpdateListener() {
@@ -160,8 +180,8 @@ public class CheckInActivity extends Activity implements View.OnClickListener {
                                 }
                             }
                         });
-                    }else {
-                        Toast.makeText(context, "请选择正确的wifi！" , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "不在签到范围！", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

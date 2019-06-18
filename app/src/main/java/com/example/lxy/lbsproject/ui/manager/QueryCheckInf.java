@@ -5,17 +5,21 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lxy.lbsproject.R;
 import com.example.lxy.lbsproject.data.model.CheckIn;
+import com.example.lxy.lbsproject.data.model.Notice;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,9 +36,11 @@ public class QueryCheckInf extends Activity implements View.OnClickListener {
     private TextView tv_day;
     private TextView tv_time;
     private TextView tv_show;
-    private EditText et_num;
     private EditText et_classes;
     private Context context = this;
+    private LinearLayout linearLayout;
+    private RecyclerView recyclerView;
+    private QueryCheckAdapter adapter;
 
     private int time;
     private int nums;
@@ -55,8 +61,9 @@ public class QueryCheckInf extends Activity implements View.OnClickListener {
         tv_day = findViewById(R.id.tv_query_check_day);
         tv_time = findViewById(R.id.tv_query_check_time);
         tv_show = findViewById(R.id.tv_query_show);
-        et_num = findViewById(R.id.et_query_check_num);
         et_classes = findViewById(R.id.et_query_check_classes);
+        linearLayout = findViewById(R.id.ll_query);
+        recyclerView = findViewById(R.id.rv_query);
     }
 
     private void setlistener() {
@@ -74,16 +81,28 @@ public class QueryCheckInf extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_query_check:
                 nums=0;
-                if (et_classes.getText().toString().equals("") || et_num.getText().toString().equals("")) {
+                if (et_classes.getText().toString().equals("")) {
                     Toast.makeText(this, "输入不能为空！", Toast.LENGTH_SHORT).show();
                 } else {
+                    adapter=new QueryCheckAdapter();
                     time = getTime(tv_time.getText().toString());
-                    BmobQuery<CheckIn> query1 = new BmobQuery<>();//查询数据
-                    query1.addWhereEqualTo("day", tv_day.getText().toString());
-                    query1.findObjects(new FindListener<CheckIn>() {
+                    BmobQuery<CheckIn> q1 = new BmobQuery<>();//查询数据
+                    q1.addWhereEqualTo("day", tv_day.getText().toString());
+                    BmobQuery<CheckIn> q2 = new BmobQuery<>();
+                    q2.addWhereEqualTo("classes", et_classes.getText().toString());
+                    List<BmobQuery<CheckIn>> queries = new ArrayList<BmobQuery<CheckIn>>();
+                    queries.add(q1);
+                    queries.add(q2);
+                    BmobQuery<CheckIn> mainQuery = new BmobQuery<CheckIn>();
+                    mainQuery.and(queries);
+                    mainQuery.findObjects(new FindListener<CheckIn>() {
                         @Override
                         public void done(final List<CheckIn> list, BmobException e) {
                             if (e == null) {
+                                linearLayout.setVisibility(View.VISIBLE);
+                                adapter.setData(list,time);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                recyclerView.setAdapter(adapter);
                                 for (int i = 0; i < list.size(); i++) {
                                     timeIn = getTime(list.get(i).getTimeIn());
                                     if (list.get(i).getTimeOut().equals("")){
@@ -95,7 +114,8 @@ public class QueryCheckInf extends Activity implements View.OnClickListener {
                                         nums++;
                                     }
                                 }
-                                tv_show.setText(nums + "/" + et_num.getText().toString());
+                                tv_show.setText(nums + "/"+list.size() );
+
                             } else {
                                 Toast.makeText(context, "查询失败！" + e, Toast.LENGTH_SHORT).show();
                             }

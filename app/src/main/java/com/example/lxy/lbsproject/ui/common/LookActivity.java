@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import com.example.lxy.lbsproject.R;
 import com.example.lxy.lbsproject.data.model.Memo;
+import com.example.lxy.lbsproject.data.model.MyUser;
 import com.example.lxy.lbsproject.data.model.Notice;
 import com.example.lxy.lbsproject.data.model.Suggest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -40,6 +42,7 @@ public class LookActivity extends Activity implements View.OnClickListener {
     private String userName;
     private int funType;
     private Context context=this;
+    private MyUser myUser;
 
 
     @Override
@@ -72,6 +75,18 @@ public class LookActivity extends Activity implements View.OnClickListener {
     private void setdata() {
         final Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
+        BmobQuery<MyUser> query = new BmobQuery<>();//查询数据
+        query.addWhereEqualTo("username", userName);
+        query.findObjects(new FindListener<MyUser>() {
+            @Override
+            public void done(final List<MyUser> list, BmobException e) {
+                if (e == null) {
+                    myUser = list.get(0);
+                } else {
+                    Toast.makeText(context, "查询失败！" + e, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         Log.e("2", "setdata: "+userName );
         funType = intent.getIntExtra("funType",0);
         lookAdapter=new LookAdapter();
@@ -105,9 +120,24 @@ public class LookActivity extends Activity implements View.OnClickListener {
             case NOTICE:
                 tv_title.setText("公告");
                 btn_add.setVisibility(View.GONE);
-                BmobQuery<Notice> query2=new BmobQuery<>();//查询数据
-                query2.addWhereEqualTo("user","2");
-                query2.findObjects(new FindListener<Notice>() {
+                BmobQuery<Notice> q1=new BmobQuery<>();//查询数据
+                q1.addWhereEqualTo("type","all");
+                BmobQuery<Notice> q2=new BmobQuery<>();
+                BmobQuery<Notice> q3=new BmobQuery<>();
+                if (userName.equals("1504010812")){
+                    q2.addWhereEqualTo("type","计算机科学与技术");
+                    q3.addWhereEqualTo("type","计15-8班");
+                }else {
+                    q2.addWhereEqualTo("type","1");
+                    q3.addWhereEqualTo("type","1");
+                }
+                List<BmobQuery<Notice>> queries = new ArrayList<BmobQuery<Notice>>();
+                queries.add(q1);
+                queries.add(q2);
+                queries.add(q3);
+                BmobQuery<Notice> mainQuery = new BmobQuery<Notice>();
+                mainQuery.or(queries);
+                mainQuery.findObjects(new FindListener<Notice>() {
                     @Override
                     public void done(final List<Notice> list, BmobException e) {
                         if (e==null){
@@ -133,7 +163,6 @@ public class LookActivity extends Activity implements View.OnClickListener {
             case NOTICEMAN:
                 tv_title.setText("公告管理");
                 BmobQuery<Notice> query3=new BmobQuery<>();//查询数据
-                query3.addWhereEqualTo("user","2");
                 query3.findObjects(new FindListener<Notice>() {
                     @Override
                     public void done(final List<Notice> list, BmobException e) {

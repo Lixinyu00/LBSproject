@@ -6,11 +6,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
-public class AddActivity extends Activity implements View.OnClickListener {
+public class AddActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private static final int MEMO = 1;  //备忘录标识
     private static final int NOTICEMAN = 3; //公告管理
     private static final int SUGGEST = 5;  //意见建议
@@ -38,11 +39,15 @@ public class AddActivity extends Activity implements View.OnClickListener {
     private Button btn_save;
     private EditText et_add;
     private EditText et_title;
+    private EditText et_select;
     private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
+    private RadioGroup radioGroup;
 
     private String userName;
     private int funType;
     private Context context = this;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,10 @@ public class AddActivity extends Activity implements View.OnClickListener {
         btn_save = findViewById(R.id.btn_add_save);
         et_add = findViewById(R.id.et_add);
         et_title = findViewById(R.id.et_title);
+        et_select = findViewById(R.id.et_select);
         relativeLayout = findViewById(R.id.rl_add);
+        linearLayout = findViewById(R.id.ll_select);
+        radioGroup = findViewById(R.id.rg_select);
     }
 
     private void setlistener() {
@@ -70,6 +78,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
         btn_save.setOnClickListener(this);
         tv_day.setOnClickListener(this);
         tv_time.setOnClickListener(this);
+        radioGroup.setOnCheckedChangeListener(this);
     }
 
     private void setdata() {
@@ -81,6 +90,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 break;
             case NOTICEMAN:
                 relativeLayout.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
                 break;
             case SUGGEST:
                 relativeLayout.setVisibility(View.GONE);
@@ -152,7 +162,11 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 Notice notice=new Notice();
                 notice.setTitle(et_title.getText().toString());
                 notice.setContent(et_add.getText().toString());
-                notice.setUser("2");
+                if (type==1){
+                    notice.setType("all");
+                }else {
+                    notice.setType(et_select.getText().toString());
+                }
                 notice.save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {
@@ -182,6 +196,15 @@ public class AddActivity extends Activity implements View.OnClickListener {
                     }
                 });
                 break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (checkedId==R.id.rb_all){
+            type=1;
+        }else {
+            type=2;
         }
     }
 }

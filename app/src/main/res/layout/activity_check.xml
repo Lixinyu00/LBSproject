@@ -76,19 +76,42 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray" />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_check"
-        android:layout_width="match_parent"
-        android:layout_height="400dp">
-    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="打卡时间记录"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_checkin_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:text="上课打卡时间"
+        android:textSize="18dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_checkin_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:text="下课打卡时间"
+        android:textSize="18dp"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btn_check"
         android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:background="@color/royalblue"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/button"
         android:text="签到"
         android:textColor="@color/white" />
 

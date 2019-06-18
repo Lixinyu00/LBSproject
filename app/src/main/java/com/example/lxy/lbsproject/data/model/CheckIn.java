@@ -9,6 +9,7 @@ public class CheckIn extends BmobObject {
     private String timeOut;
     private String classes;
     private String mac;
+    private String name;
 
     public String getUser() {
         return user;
@@ -56,5 +57,13 @@ public class CheckIn extends BmobObject {
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
